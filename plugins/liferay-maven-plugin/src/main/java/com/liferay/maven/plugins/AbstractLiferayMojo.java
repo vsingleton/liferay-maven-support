@@ -73,9 +73,10 @@ public abstract class AbstractLiferayMojo extends AbstractMojo {
 					"Liferay versions below 6.1.0 are not supported");
 			}
 
-			initPortalProperties();
-
-			initUtils();
+			if (Validator.isNull(extractPortalWeb) || !"false".equalsIgnoreCase(extractPortalWeb)) {
+				initPortalProperties();
+				initUtils();
+			}
 
 			doExecute();
 		}
@@ -602,6 +603,11 @@ public abstract class AbstractLiferayMojo extends AbstractMojo {
 	 * @component
 	 */
 	protected ArtifactResolver artifactResolver;
+
+	/**
+	 * @parameter expression="${extractPortalWeb}"
+	 */
+	protected String extractPortalWeb;
 
 	/**
 	 * @parameter expression="${liferayVersion}"
